@@ -38,12 +38,12 @@ mongoose.connect(
 /**
  * setup express routes
  */
-// CORS, todo: remove later
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+// CORS, use only for local development!
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 
 // Parsers
 app.use(bodyParser.json());
