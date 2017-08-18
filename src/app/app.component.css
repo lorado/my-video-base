@@ -26,6 +26,10 @@
     #mainWrapper footer.animating-page-transition {
       transform: translateY(100%);
       opacity: 0; }
+      @media not all and (min-resolution: 0.001dpcm) {
+        #mainWrapper footer.animating-page-transition {
+          transform: translateY(0);
+          opacity: 1; } }
     #mainWrapper footer a {
       color: #eee; }
       #mainWrapper footer a:hover, #mainWrapper footer a:focus {

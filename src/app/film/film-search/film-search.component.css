@@ -129,11 +129,17 @@
         margin: 0;
         justify-self: center; }
       #searchResults .search-result.poster-only .film-title {
+        position: relative;
         text-align: center;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        /* Firefox3-specific CSS property */ }
+        /* Safari specific CSS property */
+        /* Firefox3 specific CSS property */ }
+        @media not all and (min-resolution: 0.001dpcm) {
+          #searchResults .search-result.poster-only .film-title {
+            white-space: normal !important;
+            overflow: visible !important; } }
 @-moz-document url-prefix() {
   #searchResults .search-result.poster-only .film-title {
     white-space: normal !important;

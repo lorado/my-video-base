@@ -188,12 +188,19 @@
       }
 
       .film-title {
+        position: relative;
         text-align: center;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
 
-        /* Firefox3-specific CSS property */
+        /* Safari specific CSS property */
+        @media not all and (min-resolution: .001dpcm) {
+          white-space: normal !important;
+          overflow: visible !important;
+        }
+
+        /* Firefox3 specific CSS property */
         @-moz-document url-prefix() {
           white-space: normal !important;
           overflow: visible !important;

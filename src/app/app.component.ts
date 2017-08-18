@@ -68,8 +68,11 @@ export class AppComponent {
   }
 
   routerEnterAnimationDone() {
-    document.body.style.overflow = 'auto';
-    this.isRouterAnimating = false;
+    // set timeout for safari, as safari don't show any animation
+    setTimeout(() => {
+      document.body.style.overflow = 'auto';
+      this.isRouterAnimating = false;
+    }, 250);
   }
 
   logout() {

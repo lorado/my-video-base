@@ -30,6 +30,11 @@
     &.animating-page-transition {
       transform: translateY(100%);
       opacity: 0;
+
+      @media not all and (min-resolution: .001dpcm) {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
 
     a {
