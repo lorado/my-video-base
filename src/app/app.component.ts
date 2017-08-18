@@ -73,7 +73,6 @@ export class AppComponent {
 
   logout() {
     if (this.router.url.indexOf('/films') === 0) {
-      const oldUrl = this.router.url;
       this.router.navigateByUrl('/login');
     }
     this.authService.removeToken();
