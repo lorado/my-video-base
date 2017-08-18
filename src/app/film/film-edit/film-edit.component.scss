@@ -1,0 +1,112 @@
+@import "../../../assets/variables";
+
+.film-edit-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "title" "originalTitle" "releaseDate"
+    "posterUrl" "posterPreview"
+    "genre"
+    "overview"
+    "findPlace";
+  margin: 0 -15px;
+
+  grid-gap: 12px;
+
+  @media (min-width: 550px) {
+    grid-template-columns: 1fr 1fr 200px;
+    grid-template-areas:
+      "title originalTitle releaseDate"
+      "posterUrl posterUrl posterPreview"
+      "genre genre posterPreview"
+      "overview overview posterPreview"
+      "findPlace findPlace findPlace";
+    margin: 0;
+  }
+
+  .form-title {
+    grid-area: title;
+  }
+  .form-original-title {
+    grid-area: originalTitle;
+  }
+  .form-release-date {
+    grid-area: releaseDate;
+  }
+  .form-poster-url {
+    grid-area: posterUrl;
+  }
+  .form-genre {
+    grid-area: genre;
+  }
+  .form-overview {
+    grid-area: overview;
+  }
+  .form-find-place {
+    grid-area: findPlace;
+  }
+  .form-poster-preview {
+    grid-area: posterPreview;
+  }
+
+  &.dragging,
+  &.loading {
+    &::before {
+      content: "";
+      display: block;
+      background: rgba(255, 255, 255, 0.9);
+      position: absolute;
+      z-index: 10;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+
+    &::after {
+      content: "Poster hochladen...";
+      display: block;
+      z-index: 11;
+      position: absolute;
+      color: $primary-color;
+      text-shadow: 0 0 3px #fff;
+      font-size: 33px;
+      top: calc(50% - 23px);
+      left: calc(50% - 120px);
+    }
+  }
+
+  &.loading {
+    &::after {
+      content: "Laden...";
+    }
+  }
+}
+
+.film-poster {
+  width: 200px;
+  height: 300px;
+  margin: 0 auto;
+  z-index: 2;
+  background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSJ3aGl0ZSI+CiAgPHBhdGggZD0iTTAgNCBMMCAyOCBMMzIgMjggTDMyIDQgeiBNNCAyNCBMMTAgMTAgTDE1IDE4IEwxOCAxNCBMMjQgMjR6IE0yNSA3IEE0IDQgMCAwIDEgMjUgMTUgQTQgNCAwIDAgMSAyNSA3Ij48L3BhdGg+Cjwvc3ZnPg==") no-repeat center hsl(0, 0%, 80%);
+  background-size: calc(100% / 3);
+}
+
+#genreIds {
+  height: 35px;
+  margin-bottom: -2px;
+}
+
+#overview {
+  height: 154px;
+}
+
+.actions {
+  display: flex;
+  margin-top: 15px;
+  justify-content: space-between;
+
+  @media (min-width: 550px) {
+    justify-content: flex-end;
+  }
+}

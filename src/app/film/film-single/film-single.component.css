@@ -1,0 +1,73 @@
+.backdrop {
+  position: relative;
+  width: 100vw;
+  left: -15px;
+  min-height: calc(100vh - 165px);
+  margin-bottom: -30px;
+  background-color: #888;
+  background-size: cover;
+  background-position: center; }
+  @media (min-width: 1200px) {
+    .backdrop {
+      left: calc((100vw - 1200px) / -2); } }
+  .backdrop::before {
+    content: "";
+    background: #f2f2f2;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    grid-column: 1 / -1;
+    z-index: 1;
+    opacity: 1;
+    will-change: opacity;
+    transition: opacity 0.5s; }
+  .backdrop.lazyloaded::before {
+    opacity: 0.89; }
+  .backdrop .backdrop-content {
+    z-index: 2;
+    position: relative;
+    margin: 0 auto;
+    padding: 15px;
+    max-width: 1230px;
+    display: flex;
+    flex-direction: column; }
+    .backdrop .backdrop-content .backdrop-content-poster {
+      max-width: 300px;
+      margin: 0 auto 15px;
+      font-size: 0; }
+    @media (min-width: 670px) {
+      .backdrop .backdrop-content {
+        flex-direction: row; }
+        .backdrop .backdrop-content .backdrop-content-poster {
+          width: 250px;
+          margin: 0;
+          flex: none; }
+        .backdrop .backdrop-content .backdrop-content-about {
+          margin-left: 15px;
+          flex: auto;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between; } }
+    @media (min-width: 900px) {
+      .backdrop .backdrop-content .backdrop-content-poster {
+        width: 300px; } }
+
+.film-info-item {
+  margin-top: 17px; }
+  .film-info-item:first-child {
+    margin-top: 0; }
+  .film-info-item h2 {
+    margin-bottom: 4px; }
+  .film-info-item .badge {
+    margin-bottom: 4px;
+    margin-right: 4px; }
+  .film-info-item p:first-of-type {
+    margin-bottom: 0; }
+
+.action-buttons {
+  margin-top: 15px;
+  text-align: right; }
+
+/*# sourceMappingURL=film-single.component.css.map */

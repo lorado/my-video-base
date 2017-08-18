@@ -1,0 +1,185 @@
+.search-block {
+  display: flex; }
+  .search-block .search-block-input-box {
+    flex: auto;
+    position: relative;
+    z-index: 2; }
+    .search-block .search-block-input-box::before, .search-block .search-block-input-box::after {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #00bc5e;
+      opacity: 0;
+      right: 10px;
+      top: 10px;
+      transition: opacity 0.25s ease;
+      animation: sk-bounce 1.3s infinite ease-in-out; }
+    .search-block .search-block-input-box::after {
+      animation-delay: -0.65s; }
+    .search-block .search-block-input-box.searching::before, .search-block .search-block-input-box.searching::after {
+      opacity: 0.6; }
+    .search-block .search-block-input-box .search-block-input {
+      padding: 12px 18px;
+      font-size: 20px;
+      height: 50px;
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0; }
+  .search-block .search-block-button {
+    margin-left: -1px;
+    z-index: 2;
+    line-height: 36px; }
+  @media (max-width: 549px) {
+    .search-block {
+      flex-direction: column; }
+      .search-block .search-block-button {
+        margin: 5px 0 0; } }
+
+@keyframes sk-bounce {
+  0%, 100% {
+    transform: scale(0); }
+  50% {
+    transform: scale(1); } }
+#searchResultCount {
+  margin-bottom: 15px;
+  padding-top: 5px;
+  color: #999;
+  transform: translateY(-10px);
+  opacity: 0;
+  transition: all 0.15s ease;
+  position: relative;
+  z-index: 1; }
+  #searchResultCount.reveal {
+    opacity: 1;
+    transform: translateY(0); }
+
+#searchResults {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 15px;
+  grid-auto-flow: dense; }
+  #searchResults .search-result {
+    z-index: 2;
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 200px auto;
+    grid-template-rows: auto auto 1fr 40px;
+    grid-template-areas: "poster title" "poster genres" "poster content" "poster buttons";
+    grid-gap: 10px;
+    background-size: cover;
+    background-position: center; }
+    #searchResults .search-result::before {
+      content: "";
+      background: #fff;
+      grid-column: 1 / -1;
+      z-index: 1;
+      opacity: 1;
+      will-change: opacity;
+      transition: opacity 0.5s;
+      margin: -15px; }
+    #searchResults .search-result::before {
+      /* autoprefixer: off */
+      grid-row: 1 / -1; }
+    #searchResults .search-result.lazyloaded::before {
+      opacity: 0.89; }
+    #searchResults .search-result .film-poster {
+      width: 200px;
+      height: 300px;
+      grid-area: poster;
+      z-index: 2;
+      background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSJ3aGl0ZSI+CiAgPHBhdGggZD0iTTAgNCBMMCAyOCBMMzIgMjggTDMyIDQgeiBNNCAyNCBMMTAgMTAgTDE1IDE4IEwxOCAxNCBMMjQgMjR6IE0yNSA3IEE0IDQgMCAwIDEgMjUgMTUgQTQgNCAwIDAgMSAyNSA3Ij48L3BhdGg+Cjwvc3ZnPg==") no-repeat center #cccccc;
+      background-size: calc(100% / 3);
+      margin-bottom: -30px; }
+    #searchResults .search-result .film-title {
+      grid-area: title;
+      z-index: 2;
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.1; }
+    #searchResults .search-result .film-genres {
+      grid-area: genres;
+      z-index: 2;
+      margin: -5px 0 -4px;
+      font-size: 0; }
+      #searchResults .search-result .film-genres .badge:not(:last-of-type) {
+        margin-right: 4px; }
+      #searchResults .search-result .film-genres .badge {
+        margin-bottom: 4px; }
+        #searchResults .search-result .film-genres .badge svg {
+          fill: #888;
+          height: 15px;
+          margin: -3px 0; }
+    #searchResults .search-result .film-overview {
+      grid-area: content;
+      z-index: 2;
+      margin: 0; }
+    #searchResults .search-result .film-actions {
+      grid-area: buttons;
+      z-index: 2;
+      display: flex;
+      justify-content: flex-end;
+      margin: 0; }
+    #searchResults .search-result.poster-only {
+      grid-column: span 1;
+      grid-template-columns: 1fr;
+      grid-template-rows: 300px auto auto 40px;
+      grid-template-areas: "poster" "title" "genres" "buttons"; }
+      #searchResults .search-result.poster-only .film-poster {
+        margin: 0;
+        justify-self: center; }
+      #searchResults .search-result.poster-only .film-title {
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        /* Firefox3-specific CSS property */ }
+@-moz-document url-prefix() {
+  #searchResults .search-result.poster-only .film-title {
+    white-space: normal !important;
+    overflow: visible !important; } }
+      #searchResults .search-result.poster-only .film-genres {
+        text-align: center;
+        align-self: end; }
+      #searchResults .search-result.poster-only .film-overview {
+        display: none; }
+      #searchResults .search-result.poster-only .film-actions button {
+        flex: auto; }
+  @media (max-width: 1050px) {
+    #searchResults {
+      grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 850px) {
+    #searchResults {
+      grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 504px) {
+    #searchResults {
+      grid-template-columns: 1fr;
+      margin: 0 -15px; }
+      #searchResults .search-result {
+        grid-column: 1 !important;
+        grid-template-columns: 1fr;
+        grid-template-rows: 300px auto auto 1fr 40px;
+        grid-template-areas: "poster" "title" "genres" "content" "buttons"; }
+        #searchResults .search-result .film-poster {
+          margin: 0;
+          justify-self: center; }
+        #searchResults .search-result .film-title {
+          text-align: center;
+          white-space: normal !important;
+          overflow: visible !important; }
+        #searchResults .search-result .film-genres {
+          text-align: center;
+          margin: -5px 0 0; }
+        #searchResults .search-result .film-actions button {
+          flex: auto; } }
+
+.film-loading {
+  min-height: 418px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1; }
+  .film-loading svg {
+    stroke: #00bc5e; }
+
+/*# sourceMappingURL=film-search.component.css.map */

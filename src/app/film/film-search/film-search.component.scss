@@ -1,0 +1,270 @@
+@import "../../../assets/variables";
+
+.search-block {
+  display: flex;
+
+  .search-block-input-box {
+    flex: auto;
+    position: relative;
+    z-index: 2;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: $primary-color;
+      opacity: 0;
+      right: 10px;
+      top: 10px;
+      transition: opacity 0.25s ease;
+      animation: sk-bounce 1.3s infinite ease-in-out;
+    }
+
+    &::after {
+      animation-delay: -0.65s;
+    }
+
+    &.searching {
+      &::before,
+      &::after {
+        opacity: 0.6;
+      }
+    }
+
+    .search-block-input {
+      padding: 12px 18px;
+      font-size: 20px;
+      height: 50px;
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+    }
+  }
+
+  .search-block-button {
+    margin-left: -1px;
+    z-index: 2;
+    line-height: 36px;
+  }
+
+  @media (max-width: 549px) {
+    flex-direction: column;
+
+    .search-block-button {
+      margin: 5px 0 0;
+    }
+  }
+}
+
+@keyframes sk-bounce {
+  0%, 100% {
+    transform: scale(0.0);
+  }
+  50% {
+    transform: scale(1.0);
+  }
+}
+
+#searchResultCount {
+  //text-align: right;
+  margin-bottom: 15px;
+  padding-top: 5px;
+  color: #999;
+  transform: translateY(-10px);
+  opacity: 0;
+  transition: all 0.15s ease;
+  position: relative;
+  z-index: 1;
+
+  &.reveal {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#searchResults {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 15px;
+  grid-auto-flow: dense;
+
+  .search-result {
+    z-index: 2;
+    grid-column: span 2;
+
+    display: grid;
+    grid-template-columns: 200px auto;
+    grid-template-rows: auto auto 1fr 40px;
+    grid-template-areas: "poster title" "poster genres" "poster content" "poster buttons";
+    grid-gap: 10px;
+
+    background-size: cover;
+    background-position: center;
+
+    &::before {
+      content: "";
+      background: #fff;
+      grid-column: 1 / -1;
+      z-index: 1;
+      opacity: 1;
+      will-change: opacity;
+      transition: opacity 0.5s;
+      margin: -15px;
+    }
+    // disable autoprefixer to avoid warnings - autoprefixes tries to perfix grids, but IE has old spec...
+    &::before {
+      /* autoprefixer: off */
+      grid-row: 1 / -1;
+    }
+
+    &.lazyloaded::before {
+      opacity: 0.89;
+    }
+
+    .film-poster {
+      width: 200px;
+      height: 300px;
+      grid-area: poster;
+      z-index: 2;
+      background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSJ3aGl0ZSI+CiAgPHBhdGggZD0iTTAgNCBMMCAyOCBMMzIgMjggTDMyIDQgeiBNNCAyNCBMMTAgMTAgTDE1IDE4IEwxOCAxNCBMMjQgMjR6IE0yNSA3IEE0IDQgMCAwIDEgMjUgMTUgQTQgNCAwIDAgMSAyNSA3Ij48L3BhdGg+Cjwvc3ZnPg==") no-repeat center hsl(0, 0%, 80%);
+      background-size: calc(100% / 3);
+      margin-bottom: -30px;
+    }
+
+    .film-title {
+      grid-area: title;
+      z-index: 2;
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.1;
+    }
+
+    .film-genres {
+      grid-area: genres;
+      z-index: 2;
+      margin: -5px 0 -4px;
+      font-size: 0;
+
+      .badge:not(:last-of-type) {
+        margin-right: 4px;
+      }
+
+      .badge {
+        margin-bottom: 4px;
+        svg {
+          fill: #888;
+          height: 15px;
+          margin: -3px 0;
+        }
+      }
+    }
+
+    .film-overview {
+      grid-area: content;
+      z-index: 2;
+      margin: 0;
+    }
+
+    .film-actions {
+      grid-area: buttons;
+      z-index: 2;
+      display: flex;
+      justify-content: flex-end;
+      margin: 0;
+    }
+
+    &.poster-only {
+      grid-column: span 1;
+
+      grid-template-columns: 1fr;
+      grid-template-rows: 300px auto auto 40px;
+      grid-template-areas: "poster" "title" "genres" "buttons";
+
+      .film-poster {
+        margin: 0;
+        justify-self: center;
+      }
+
+      .film-title {
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        /* Firefox3-specific CSS property */
+        @-moz-document url-prefix() {
+          white-space: normal !important;
+          overflow: visible !important;
+        }
+      }
+
+      .film-genres {
+        text-align: center;
+        align-self: end;
+      }
+
+      .film-overview {
+        display: none;
+      }
+
+      .film-actions button {
+        flex: auto;
+      }
+    }
+  }
+
+  @media (max-width: 1050px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 850px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 504px) {
+    grid-template-columns: 1fr;
+    margin: 0 -15px;
+
+    .search-result {
+      grid-column: 1 !important;
+
+      grid-template-columns: 1fr;
+      grid-template-rows: 300px auto auto 1fr 40px;
+      grid-template-areas: "poster" "title" "genres" "content" "buttons";
+
+      .film-poster {
+        margin: 0;
+        justify-self: center;
+      }
+
+      .film-title {
+        text-align: center;
+        white-space: normal !important;
+        overflow: visible !important;
+      }
+
+      .film-genres {
+        text-align: center;
+        margin: -5px 0 0;
+      }
+
+      .film-actions button {
+        flex: auto;
+      }
+    }
+  }
+}
+
+.film-loading {
+  min-height: 418px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+
+  svg {
+    stroke: $primary-color;
+  }
+}

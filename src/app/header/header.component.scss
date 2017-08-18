@@ -1,0 +1,215 @@
+@import "../../assets/variables";
+
+$size: 60px;
+$height: 20px;
+$width: 30px;
+$line-size: 3px;
+$line-color: $primary-color;
+$line-radius: $line-size;
+$to-translate: ($height - $line-size) / 2;
+$bounce: cubic-bezier(.87,-.50,.19,1.50);
+
+.menu-toggle {
+  position: relative;
+  height: $size;
+  width: $size;
+  background-color: #fff;
+  cursor: pointer;
+  overflow: hidden;
+
+  &__icon {
+    position: absolute;
+    width: $width;
+    height: $height;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  &__line {
+    position: absolute;
+    left: 0;
+    background-color: $line-color;
+    height: $line-size;
+    width: 100%;
+    border-radius: $line-radius;
+    pointer-events: none;
+    &--1 {
+      top: 0;
+    }
+    &--2 {
+      top: 0;
+      bottom: 0;
+      margin: auto;
+    }
+    &--3 {
+      bottom: 0;
+    }
+  }
+
+
+  &__line--4,
+  &__line--5 {
+    opacity: 0;
+    top: $to-translate;
+    transition: opacity .2s ease-in-out,
+    transform .2s ease-in-out;
+  }
+  &__line--1 {
+    transition: width .2s ease-in-out .4s;
+  }
+  &__line--2 {
+    transition: width .2s ease-in-out .3s;
+  }
+  &__line--3 {
+    transition: width .2s ease-in-out .2s;
+  }
+  &__line--4 {
+    transform: rotate(45deg) translate3d(-$width,0,0);
+    transition: opacity .2s ease-in-out .2s,
+    transform .2s ease-in-out .2s;
+  }
+  &__line--5 {
+    transform:  rotate(-45deg) translate3d($width,0,0);
+    transition: opacity .2s ease-in-out,
+    transform .2s ease-in-out;
+  }
+  // Open
+  &.open &__line--1 {
+    width: 0;
+    transition: width .2s ease-in-out;
+  }
+  &.open &__line--2 {
+    width: 0;
+    transition: width .2s ease-in-out .1s;
+  }
+  &.open &__line--3 {
+    width: 0;
+    transition: width .2s ease-in-out .2s;
+  }
+  &.open &__line--4 {
+    opacity: 1;
+    transform: rotate(45deg) translate3d(0,0,0);
+    transition: opacity .2s ease-in-out .2s,
+    transform .2s ease-in-out .2s;
+  }
+  &.open &__line--5 {
+    opacity: 1;
+    transform:  rotate(-45deg) translate3d(0,0,0);
+    transition: opacity .2s ease-in-out .4s,
+    transform .2s ease-in-out .4s;
+  }
+
+  @media (min-width: 550px) {
+    display: none;
+  }
+}
+
+
+header {
+  position: fixed;
+  z-index: 999;
+  justify-content: space-between;
+  top: 0;
+  left: 0;
+  right: 0;
+  min-height: 60px;
+  display: flex;
+  flex-wrap: wrap;
+  background: #fff;
+  box-shadow: 0 1px 15px 0 rgba(0,0,0, 0.14);
+
+  #logoLink {
+    padding: 12px 20px;
+    font-size: 0;
+
+    svg {
+      transition: all 0.15s ease;
+      fill: $primary-color;
+    }
+
+    &:hover svg {
+      transform: scale(1.05);
+    }
+  }
+
+  nav {
+    width: 100%;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    height: 0;
+    opacity: 0;
+
+    &.open {
+      height: 60px;
+      opacity: 1;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+
+      li {
+        flex: 1 1 50%;
+
+        a {
+          width: 100%;
+          text-align: center;
+          padding: 0 15px;
+          display: inline-block;
+          line-height: 60px;
+          font-size: 16px;
+          color: #000;
+          position: relative;
+          transition: all 0.2s ease;
+          text-decoration: none;
+
+          &:hover::after,
+          &.active::after {
+            color: $primary-color;
+          }
+
+          &::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: $primary-color;
+            opacity: 0;
+            transform: scaleX(0);
+            transition: all 0.25s ease;
+          }
+
+          &:hover::after,
+          &.active::after {
+            opacity: 1;
+            transform: scaleX(1);
+          }
+        }
+      }
+    }
+  }
+
+  @media (min-width: 550px) {
+    flex-wrap: nowrap;
+
+    nav {
+      width: auto;
+      height: auto;
+      opacity: 1;
+
+      ul {
+        margin-right: 15px;
+
+        li {
+          flex: auto;
+        }
+      }
+    }
+  }
+}

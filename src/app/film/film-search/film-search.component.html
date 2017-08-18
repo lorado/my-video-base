@@ -1,0 +1,70 @@
+<div class="search-block">
+  <div class="search-block-input-box"
+       [class.searching]="isSearching"
+       [style.animationPlayState]="searchAnimationState">
+    <input class="search-block-input form-control"
+           (keyup)="searchForFilm(searchInputElement.value)"
+           placeholder="Suche nach Film..."
+           #searchInputElement>
+  </div>
+  <a class="btn btn-primary search-block-button"
+          routerLink="/films/new/form"
+          type="button">
+    oder trage einen Film manuell ein
+  </a>
+</div>
+<div id="searchResultCount" [class.reveal]="!isSearching && totalResults > -1">
+  {{totalResults | i18nPlural: {'=-1': '', 'other': '# Einträge gefunden'} }}
+</div>
+
+<div id="searchResults" #searchResults [@filmElements]="films.length + -1 * (isLoadingNextPage ? 1 : 0)">
+  <div *ngFor="let film of films"
+       class="card shadow shadow-hover search-result lazyload"
+       [class.poster-only]="!film.overview"
+       [attr.data-bg]="film.backdrop_path ? 'https://image.tmdb.org/t/p/w500' + film.backdrop_path :
+                        film.poster_path ? 'https://image.tmdb.org/t/p/w500' + film.poster_path : ''"
+  >
+    <figure class="film-poster">
+      <img class="fade lazyload"
+           data-sizes="auto"
+           [attr.data-src]="film.poster_path ? 'https://image.tmdb.org/t/p/w200_and_h300_bestv2' + film.poster_path : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='"
+           [attr.data-srcset]="film.poster_path ?
+            'https://image.tmdb.org/t/p/w200_and_h300_bestv2' + film.poster_path + ' 1x, https://image.tmdb.org/t/p/w400_and_h600_bestv2' + film.poster_path + ' 2x' :
+            null"
+           alt="{{film.title}}"
+      >
+    </figure>
+    <h3 class="film-title">{{film.title}}</h3>
+    <div class="film-genres">
+      <span class="badge" *ngIf="film.release_date">
+        <svg xmlns="http://www.w3.org/2000/svg"version="1.1" x="0px" y="0px" viewBox="0 0 45.971 45.971" style="enable-background:new 0 0 45.971 45.971;" xml:space="preserve">
+          <g>
+            <path d="M45.968,7.264c0-2.807-2.274-5.081-5.081-5.081H5.081C2.274,2.182,0,4.457,0,7.264v31.444c0,2.807,2.274,5.08,5.081,5.08   c0.576,0,1.043-0.467,1.043-1.043v-2.166c0-0.561,0.419-0.984,0.979-0.984h6.087c0.561,0,0.987,0.425,0.987,0.984v2.166   c0,0.576,0.467,1.043,1.043,1.043h15.53c0.576,0,1.043-0.467,1.043-1.043v-2.166c0-0.561,0.45-0.984,1.01-0.984h6.088   c0.56,0,1.039,0.425,1.039,0.984v2.25c0,0.529,0.43,0.959,0.959,0.959c2.807,0,5.082-2.273,5.082-5.08V7.264H45.968z M14.26,30.442   c0,0.561-0.454,1.016-1.014,1.016H7.138c-0.56,0-1.014-0.455-1.014-1.016v-6.107c0-0.561,0.454-1.016,1.014-1.016h6.108   c0.56,0,1.014,0.455,1.014,1.016V30.442z M14.26,14.253c0,0.56-0.454,1.014-1.015,1.014H7.138c-0.56,0-1.014-0.454-1.014-1.014   v-6.11c0-0.559,0.454-1.013,1.014-1.013h6.108c0.561,0,1.015,0.454,1.015,1.013v6.11H14.26z M39.93,30.442   c0,0.561-0.455,1.016-1.015,1.016h-6.108c-0.56,0-1.014-0.455-1.014-1.016v-6.107c0-0.561,0.454-1.016,1.014-1.016h6.108   c0.56,0,1.015,0.455,1.015,1.016V30.442z M39.93,14.253c0,0.56-0.455,1.014-1.015,1.014h-6.108c-0.56,0-1.014-0.454-1.014-1.014   v-6.11c0-0.559,0.454-1.013,1.014-1.013h6.108c0.56,0,1.015,0.454,1.015,1.013V14.253z"/>
+          </g>
+        </svg>
+       {{ film.release_date | date:'y' }}
+      </span>
+      <span class="badge" *ngFor="let genre of film.genres">
+        {{ genre }}
+      </span>
+    </div>
+    <p class="film-overview">{{film.overview | excerpt:450}}</p>
+    <div class="film-actions">
+      <button type="button" class="btn btn-primary" (click)="saveFilm(film)">Film auswählen</button>
+    </div>
+  </div>
+  <div class="card film-loading" *ngIf="isLoadingNextPage">
+    <svg xmlns="http://www.w3.org/2000/svg" width="120" viewBox="0 0 44 44">
+      <g fill="none" fill-rule="evenodd" stroke-width="2">
+        <circle cx="22" cy="22" r="15.1444">
+          <animate attributeName="r" begin="0s" dur="1.8s" values="1; 20" calcMode="spline" keyTimes="0; 1" keySplines="0.165, 0.84, 0.44, 1" repeatCount="indefinite"/>
+          <animate attributeName="stroke-opacity" begin="0s" dur="1.8s" values="1; 0" calcMode="spline" keyTimes="0; 1" keySplines="0.3, 0.61, 0.355, 1" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="22" cy="22" r="19.8024">
+          <animate attributeName="r" begin="-0.9s" dur="1.8s" values="1; 20" calcMode="spline" keyTimes="0; 1" keySplines="0.165, 0.84, 0.44, 1" repeatCount="indefinite"/>
+          <animate attributeName="stroke-opacity" begin="-0.9s" dur="1.8s" values="1; 0" calcMode="spline" keyTimes="0; 1" keySplines="0.3, 0.61, 0.355, 1" repeatCount="indefinite"/>
+        </circle>
+      </g>
+    </svg>
+  </div>
+</div>

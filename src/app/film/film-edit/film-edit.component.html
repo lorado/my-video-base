@@ -1,0 +1,68 @@
+<h1>
+  {{ editMode ? 'Film bearbeiten' : 'Neuen Film eintragen' }}
+</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
+  <div class="card shadow film-edit-form"
+       [class.dragging]="isDragging"
+       [class.loading]="!formIsLoaded"
+       (dragover)="onDragover($event)"
+       (dragenter)="onDragenter($event)"
+       (dragleave)="onDragleave($event)"
+       (drop)="onDrop($event)"
+  >
+    <input type="hidden" formControlName="backdropPath">
+    <div class="form-title form-group" [class.has-error]="form.get('title').touched && !form.get('title').valid">
+      <label for="title">Titel</label>
+      <input id="title" class="form-control" formControlName="title">
+    </div>
+    <div class="form-original-title form-group">
+      <label for="originalTitle">Originaltitel</label>
+      <input id="originalTitle" class="form-control" formControlName="originalTitle">
+    </div>
+    <div class="form-release-date form-group">
+      <label for="releaseDate">Veröffentlichungsdatum</label>
+      <input id="releaseDate" class="form-control" formControlName="releaseDate">
+    </div>
+    <div class="form-poster-url form-group">
+      <input type="file" style="display: none;" #fileInput (change)="fileInputChanged(fileInput)"
+             accept=".jpg,.jpeg,.png, image/png,image/jpeg">
+      <label for="posterPath">Poster (400x600)
+        <span *ngIf="!posterIsUploaded">
+          URL oder <a (click)="fileInput.click()">Bild hierein ziehen</a>
+        </span>
+        <small style="cursor: pointer;" class="text-primary" (click)="removeUploadedImage()">
+          {{ posterIsUploaded ? 'Das hochgeladene Bild löschen' : '' }}
+        </small>
+      </label>
+      <input id="posterPath" class="form-control" formControlName="posterPath" (change)="posterPathChanged()">
+    </div>
+    <div class="form-poster-preview">
+      <figure class="film-poster">
+        <img class="fade lazyload"
+             alt="{{form.value.title}}"
+             data-src="{{posterPreviewSrc}}"
+             *ngIf="posterPreviewSrc"
+        >
+      </figure>
+    </div>
+    <div class="form-genre form-group">
+      <label for="genres">Genre</label>
+      <select id="genres" class="form-control" formControlName="genres" multiple></select>
+    </div>
+    <div class="form-overview form-group">
+      <label for="overview">Kurze Filmbeschreibung</label>
+      <textarea id="overview" class="form-control" formControlName="overview"></textarea>
+    </div>
+    <div class="form-find-place form-group">
+      <label for="placeToFind">Wo ist der Film abgelegt?</label>
+      <input id="placeToFind" class="form-control" formControlName="placeToFind">
+    </div>
+  </div>
+
+  <div class="actions">
+    <button type="button" class="shadow shadow-hover btn" (click)="onCancel()">Abbrechen</button>
+    <button class="shadow shadow-hover btn btn-primary" [disabled]="savingForm">Film speichern</button>
+  </div>
+</form>
+

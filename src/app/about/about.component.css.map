@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAEA,aAAc;EACZ,SAAS,EAAE,IAAI;EACf,WAAW,EAAE,GAAG;EAChB,MAAM,EAAE,QAAQ;EAEhB,iBAAI;IACF,WAAW,EAAE,GAAG;IAChB,MAAM,EAAE,IAAI;IACZ,QAAQ,EAAE,QAAQ;IAClB,GAAG,EAAE,GAAG;IACR,IAAI,ECZQ,OAAO",
+"sources": ["about.component.scss","../../assets/variables.scss"],
+"names": [],
+"file": "about.component.css"
+}

@@ -1,0 +1,17 @@
+form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.form-group + .form-group {
+  margin-top: 10px;
+}
+
+.actions {
+  margin-top: 15px;
+  display: flex;
+
+  button {
+    flex: 1 1 50%;
+  }
+}

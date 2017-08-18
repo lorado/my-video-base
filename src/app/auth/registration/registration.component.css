@@ -1,0 +1,14 @@
+form {
+  max-width: 400px;
+  margin: 0 auto; }
+
+.form-group + .form-group {
+  margin-top: 10px; }
+
+.actions {
+  margin-top: 15px;
+  display: flex; }
+  .actions button {
+    flex: 1 1 50%; }
+
+/*# sourceMappingURL=registration.component.css.map */

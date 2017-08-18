@@ -1,0 +1,25 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h1 class="text-center">Registration</h1>
+  <div class="card shadow">
+    <div class="form-group" [class.has-error]="form.get('email').touched && !form.get('email').valid">
+      <label for="email">Email</label>
+      <input id="email" class="form-control" formControlName="email">
+    </div>
+    <div formGroupName="passwords" class="form-group"
+         [class.has-error]="form.get('passwords').touched && !form.get('passwords').valid">
+      <div class="form-group">
+        <label for="password">Passwort</label>
+        <input id="password" type="password" class="form-control" formControlName="password" autocomplete="new-password">
+      </div>
+      <div class="form-group">
+        <label for="passwordRepeat">Passwort wiederholen</label>
+        <input id="passwordRepeat" type="password" class="form-control" formControlName="passwordRepeat" autocomplete="new-password">
+      </div>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn" routerLink="/login">Login</button>
+      <button class="btn btn-primary" [disabled]="processingForm">Registrieren</button>
+    </div>
+  </div>
+
+</form>

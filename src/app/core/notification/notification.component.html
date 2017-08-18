@@ -1,0 +1,11 @@
+<div
+  *ngFor="let notification of notifications"
+  class="notification notification-{{ notification.type }}"
+  [class.close-by-click]="notification.closeByClick !== false"
+  [@notificationState]
+  (mouseenter)="onMouseenter(notification)"
+  (mouseleave)="onMouseleave(notification)"
+  (click)="onClick(notification)"
+>
+  <p [innerHtml]="notification.text"></p>
+</div>

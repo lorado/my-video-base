@@ -1,0 +1,57 @@
+<h1>
+  {{ film.title }} <small *ngIf="film.releaseDate">({{ film.releaseDate | date:'y' }})</small>
+</h1>
+
+<div class="backdrop lazyload" [attr.data-bg]="film.backdropPath">
+  <div class="backdrop-content">
+    <figure class="backdrop-content-poster">
+      <img class="fade lazyload"
+           [attr.data-src]="film.posterPath ? film.posterPath : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII='"
+           alt="{{ film.title }}"
+      >
+    </figure>
+    <div class="backdrop-content-about">
+      <div class="film-details">
+        <ng-template [ngIf]="film.originalTitle">
+          <div class="film-info-item">
+            <h2>Originaltitel</h2>
+            <span>{{ film.originalTitle }}</span>
+          </div>
+        </ng-template>
+
+        <div class="film-info-item">
+          <h2>Genre</h2>
+          <span class="badge" *ngFor="let genre of film.genres">
+            {{ genre }}
+          </span>
+          <span *ngIf="film.genres.length === 0"><i>Keine Genre festelegt...</i></span>
+        </div>
+
+        <div class="film-info-item">
+          <h2>Handlung</h2>
+          <p *ngIf="film.overview; else noFilmOverview">{{ film.overview }}</p>
+          <ng-template #noFilmOverview><i>Keine Beschreibung...</i></ng-template>
+        </div>
+
+        <div class="film-info-item" *ngIf="film.releaseDate">
+          <h2>Veröffentlicht am</h2>
+          <span>{{ film.releaseDate | date:'dd.MM.y' }}</span>
+        </div>
+
+        <div class="film-info-item">
+          <h2>Wo ist der Film abgelegt?</h2>
+          <span>{{ film.placeToFind }}</span>
+          <span *ngIf="!film.placeToFind"><i>Nicht angegeben...</i></span>
+        </div>
+
+      </div>
+      <div class="action-buttons">
+        <button type="button" class="btn btn-danger" (click)="deleteFilm()">Löschen</button>
+        <a type="button" class="btn btn-primary" routerLink="edit">Bearbeiten</a>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>

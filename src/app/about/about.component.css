@@ -1,0 +1,12 @@
+.about-header {
+  font-size: 60px;
+  font-weight: 300;
+  margin: 0 0 15px; }
+  .about-header svg {
+    margin-left: 5px;
+    height: 49px;
+    position: relative;
+    top: 8px;
+    fill: #00bc5e; }
+
+/*# sourceMappingURL=about.component.css.map */
